@@ -1,6 +1,7 @@
 package conv
 
 import (
+	"fmt"
 	"reflect"
 )
 
@@ -11,207 +12,209 @@ func conv(v interface{}, o interface{}) error {
 	}
 	decoder, err := NewDecoder(config)
 	if err != nil {
+		fmt.Println(err.Error())
 		return err
 	}
 	err = decoder.decode("", v, reflect.ValueOf(decoder.config.Result).Elem())
 	if err != nil {
+		fmt.Println(err.Error())
 		return err
 	}
 	return nil
 }
 
-func Int(v interface{}) (int, error) {
+func Int(v interface{}) int {
 	var output int
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Ints(v interface{}) ([]int, error) {
+func Ints(v interface{}) []int {
 	var output []int
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Int8(v interface{}) (int8, error) {
+func Int8(v interface{}) int8 {
 	var output int8
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Int8s(v interface{}) ([]int8, error) {
+func Int8s(v interface{}) []int8 {
 	var output []int8
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Int16(v interface{}) (int16, error) {
+func Int16(v interface{}) int16 {
 	var output int16
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Int16s(v interface{}) ([]int16, error) {
+func Int16s(v interface{}) []int16 {
 	var output []int16
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Int32(v interface{}) (int32, error) {
+func Int32(v interface{}) int32 {
 	var output int32
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Int32s(v interface{}) ([]int32, error) {
+func Int32s(v interface{}) []int32 {
 	var output []int32
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Int64(v interface{}) (int64, error) {
+func Int64(v interface{}) int64 {
 	var output int64
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Int64s(v interface{}) ([]int64, error) {
+func Int64s(v interface{}) []int64 {
 	var output []int64
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Uint(v interface{}) (uint, error) {
+func Uint(v interface{}) uint {
 	var output uint
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Uints(v interface{}) ([]uint, error) {
+func Uints(v interface{}) []uint {
 	var output []uint
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Uint8(v interface{}) (uint8, error) {
+func Uint8(v interface{}) uint8 {
 	var output uint8
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Uint8s(v interface{}) ([]uint8, error) {
+func Uint8s(v interface{}) []uint8 {
 	var output []uint8
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Uint16(v interface{}) (uint16, error) {
+func Uint16(v interface{}) uint16 {
 	var output uint16
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Uint16s(v interface{}) ([]uint16, error) {
+func Uint16s(v interface{}) []uint16 {
 	var output []uint16
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Uint32(v interface{}) (uint32, error) {
+func Uint32(v interface{}) uint32 {
 	var output uint32
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Uint32s(v interface{}) ([]uint32, error) {
+func Uint32s(v interface{}) []uint32 {
 	var output []uint32
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Uint64(v interface{}) (uint64, error) {
+func Uint64(v interface{}) uint64 {
 	var output uint64
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Uint64s(v interface{}) ([]uint64, error) {
+func Uint64s(v interface{}) []uint64 {
 	var output []uint64
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Bool(v interface{}) (bool, error) {
+func Bool(v interface{}) bool {
 	var output bool
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Bools(v interface{}) ([]bool, error) {
+func Bools(v interface{}) []bool {
 	var output []bool
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func String(v interface{}) (string, error) {
+func String(v interface{}) string {
 	var output string
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Strings(v interface{}) ([]string, error) {
+func Strings(v interface{}) []string {
 	var output []string
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Map(v interface{}) (map[string]interface{}, error) {
+func Map(v interface{}) map[string]interface{} {
 	var output map[string]interface{}
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func MapStrStr(v interface{}) (map[string]string, error) {
+func MapStrStr(v interface{}) map[string]string {
 	var output map[string]string
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Maps(v interface{}) ([]map[string]interface{}, error) {
+func Maps(v interface{}) []map[string]interface{} {
 	var output []map[string]interface{}
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Interfaces(v interface{}) ([]interface{}, error) {
+func Interfaces(v interface{}) []interface{} {
 	var output []interface{}
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Struct(v interface{}, o interface{}) error {
-	return conv(v, o)
+func Struct(v interface{}, o interface{}) {
+	conv(v, o)
 }
 
-func Float32(v interface{}) (float32, error) {
+func Float32(v interface{}) float32 {
 	var output float32
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Float32s(v interface{}) ([]float32, error) {
+func Float32s(v interface{}) []float32 {
 	var output []float32
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Float64(v interface{}) (float64, error) {
+func Float64(v interface{}) float64 {
 	var output float64
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
 
-func Float64s(v interface{}) ([]float64, error) {
+func Float64s(v interface{}) []float64 {
 	var output []float64
-	err := conv(v, &output)
-	return output, err
+	conv(v, &output)
+	return output
 }
