@@ -1,4 +1,4 @@
-package mapstructure
+package conv
 
 import (
 	"fmt"
@@ -32,7 +32,7 @@ func ExampleDecode() {
 
 	fmt.Printf("%#v", result)
 	// Output:
-	// mapstructure.Person{Name:"Mitchell", Age:91, Emails:[]string{"one", "two", "three"}, Extra:map[string]string{"twitter":"mitchellh"}}
+	// conv.Person{Name:"Mitchell", Age:91, Emails:[]string{"one", "two", "three"}, Extra:map[string]string{"twitter":"mitchellh"}}
 }
 
 func ExampleDecode_errors() {
@@ -141,15 +141,15 @@ func ExampleDecode_weaklyTypedInput() {
 	}
 
 	fmt.Printf("%#v", result)
-	// Output: mapstructure.Person{Name:"123", Age:42, Emails:[]string{}}
+	// Output: conv.Person{Name:"123", Age:42, Emails:[]string{}}
 }
 
 func ExampleDecode_tags() {
-	// Note that the mapstructure tags defined in the struct type
+	// Note that the conv tags defined in the struct type
 	// can indicate which fields the values are mapped to.
 	type Person struct {
-		Name string `mapstructure:"person_name"`
-		Age  int    `mapstructure:"person_age"`
+		Name string `conv:"person_name"`
+		Age  int    `conv:"person_age"`
 	}
 
 	input := map[string]interface{}{
@@ -165,7 +165,7 @@ func ExampleDecode_tags() {
 
 	fmt.Printf("%#v", result)
 	// Output:
-	// mapstructure.Person{Name:"Mitchell", Age:91}
+	// conv.Person{Name:"Mitchell", Age:91}
 }
 
 func ExampleDecode_embeddedStruct() {
@@ -180,8 +180,8 @@ func ExampleDecode_embeddedStruct() {
 		City string
 	}
 	type Person struct {
-		Family    `mapstructure:",squash"`
-		Location  `mapstructure:",squash"`
+		Family    `conv:",squash"`
+		Location  `conv:",squash"`
 		FirstName string
 	}
 
@@ -203,12 +203,12 @@ func ExampleDecode_embeddedStruct() {
 }
 
 func ExampleDecode_remainingData() {
-	// Note that the mapstructure tags defined in the struct type
+	// Note that the conv tags defined in the struct type
 	// can indicate which fields the values are mapped to.
 	type Person struct {
 		Name  string
 		Age   int
-		Other map[string]interface{} `mapstructure:",remain"`
+		Other map[string]interface{} `conv:",remain"`
 	}
 
 	input := map[string]interface{}{
@@ -225,7 +225,7 @@ func ExampleDecode_remainingData() {
 
 	fmt.Printf("%#v", result)
 	// Output:
-	// mapstructure.Person{Name:"Mitchell", Age:91, Other:map[string]interface {}{"email":"mitchell@example.com"}}
+	// conv.Person{Name:"Mitchell", Age:91, Other:map[string]interface {}{"email":"mitchell@example.com"}}
 }
 
 func ExampleDecode_omitempty() {
@@ -237,8 +237,8 @@ func ExampleDecode_omitempty() {
 		City string
 	}
 	type Person struct {
-		*Family   `mapstructure:",omitempty"`
-		*Location `mapstructure:",omitempty"`
+		*Family   `conv:",omitempty"`
+		*Location `conv:",omitempty"`
 		Age       int
 		FirstName string
 	}

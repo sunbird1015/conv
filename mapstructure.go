@@ -1,4 +1,4 @@
-// Package mapstructure exposes functionality to convert one arbitrary
+// package conv exposes functionality to convert one arbitrary
 // Go type into another, typically to convert a map[string]interface{}
 // into a native Go structure.
 //
@@ -11,34 +11,34 @@
 //
 // Field Tags
 //
-// When decoding to a struct, mapstructure will use the field name by
+// When decoding to a struct, conv will use the field name by
 // default to perform the mapping. For example, if a struct has a field
-// "Username" then mapstructure will look for a key in the source value
+// "Username" then conv will look for a key in the source value
 // of "username" (case insensitive).
 //
 //     type User struct {
 //         Username string
 //     }
 //
-// You can change the behavior of mapstructure by using struct tags.
-// The default struct tag that mapstructure looks for is "mapstructure"
+// You can change the behavior of conv by using struct tags.
+// The default struct tag that conv looks for is "conv"
 // but you can customize it using DecoderConfig.
 //
 // Renaming Fields
 //
-// To rename the key that mapstructure looks for, use the "mapstructure"
+// To rename the key that conv looks for, use the "conv"
 // tag and set a value directly. For example, to change the "username" example
 // above to "user":
 //
 //     type User struct {
-//         Username string `mapstructure:"user"`
+//         Username string `conv:"user"`
 //     }
 //
 // Embedded Structs and Squashing
 //
 // Embedded structs are treated as if they're another field with that name.
 // By default, the two structs below are equivalent when decoding with
-// mapstructure:
+// conv:
 //
 //     type Person struct {
 //         Name string
@@ -59,11 +59,11 @@
 //     }
 //
 // If your "person" value is NOT nested, then you can append ",squash" to
-// your tag value and mapstructure will treat it as if the embedded struct
+// your tag value and conv will treat it as if the embedded struct
 // were part of the struct directly. Example:
 //
 //     type Friend struct {
-//         Person `mapstructure:",squash"`
+//         Person `conv:",squash"`
 //     }
 //
 // Now the following input would be accepted:
@@ -83,12 +83,12 @@
 //         "name": "alice",
 //     }
 //
-// DecoderConfig has a field that changes the behavior of mapstructure
+// DecoderConfig has a field that changes the behavior of conv
 // to always squash embedded structs.
 //
 // Remainder Values
 //
-// If there are any unmapped keys in the source value, mapstructure by
+// If there are any unmapped keys in the source value, conv by
 // default will silently ignore them. You can error by setting ErrorUnused
 // in DecoderConfig. If you're using Metadata you can also maintain a slice
 // of the unused keys.
@@ -100,7 +100,7 @@
 //
 //     type Friend struct {
 //         Name  string
-//         Other map[string]interface{} `mapstructure:",remain"`
+//         Other map[string]interface{} `conv:",remain"`
 //     }
 //
 // Given the input below, Other would be populated with the other
@@ -123,7 +123,7 @@
 // be encoded into the destination type.
 //
 //     type Source struct {
-//         Age int `mapstructure:",omitempty"`
+//         Age int `conv:",omitempty"`
 //     }
 //
 // Unexported fields
@@ -154,9 +154,9 @@
 //
 // Other Configuration
 //
-// mapstructure is highly configurable. See the DecoderConfig struct
+// conv is highly configurable. See the DecoderConfig struct
 // for other features and options that are supported.
-package mapstructure
+package conv
 
 import (
 	"encoding/json"
@@ -249,7 +249,7 @@ type DecoderConfig struct {
 	// added to an individual struct field using a tag.  For example:
 	//
 	//  type Parent struct {
-	//      Child `mapstructure:",squash"`
+	//      Child `conv:",squash"`
 	//  }
 	Squash bool
 
@@ -261,12 +261,12 @@ type DecoderConfig struct {
 	// value.
 	Result interface{}
 
-	// The tag name that mapstructure reads for field names. This
-	// defaults to "mapstructure"
+	// The tag name that conv reads for field names. This
+	// defaults to "conv"
 	TagName string
 
 	// IgnoreUntaggedFields ignores all struct fields without explicit
-	// TagName, comparable to `mapstructure:"-"` as default behaviour.
+	// TagName, comparable to `conv:"-"` as default behaviour.
 	IgnoreUntaggedFields bool
 
 	// MatchName is the function used to match the map key to the struct
@@ -368,6 +368,16 @@ func WeakDecodeMetadata(input interface{}, output interface{}, metadata *Metadat
 	return decoder.Decode(input)
 }
 
+func matchName(mapKey string, fieldName string) bool {
+	if strings.EqualFold(mapKey, fieldName) {
+		return true
+	}
+	if strings.EqualFold(strings.ReplaceAll(mapKey, "_", ""), fieldName) {
+		return true
+	}
+	return false
+}
+
 // NewDecoder returns a new decoder for the given configuration. Once
 // a decoder has been returned, the same configuration must not be used
 // again.
@@ -397,11 +407,11 @@ func NewDecoder(config *DecoderConfig) (*Decoder, error) {
 	}
 
 	if config.TagName == "" {
-		config.TagName = "mapstructure"
+		config.TagName = "conv"
 	}
 
 	if config.MatchName == nil {
-		config.MatchName = strings.EqualFold
+		config.MatchName = matchName
 	}
 
 	result := &Decoder{
@@ -1522,7 +1532,7 @@ func isStructTypeConvertibleToMap(typ reflect.Type, checkMapstructureTags bool, 
 		if f.PkgPath == "" && !checkMapstructureTags { // check for unexported fields
 			return true
 		}
-		if checkMapstructureTags && f.Tag.Get(tagName) != "" { // check for mapstructure tags inside
+		if checkMapstructureTags && f.Tag.Get(tagName) != "" { // check for conv tags inside
 			return true
 		}
 	}
