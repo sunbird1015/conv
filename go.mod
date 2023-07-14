@@ -1,3 +1,3 @@
-module github.com/mitchellh/mapstructure
+module github.com/sunbird1015/conv
 
-go 1.14
+go 1.20
