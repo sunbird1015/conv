@@ -9,6 +9,7 @@ func conv(v interface{}, o interface{}) error {
 	config := &DecoderConfig{
 		Result:           o,
 		WeaklyTypedInput: true,
+		Squash:           true,
 	}
 	decoder, err := NewDecoder(config)
 	if err != nil {
