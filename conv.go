@@ -224,3 +224,19 @@ func Float64s(v interface{}) []float64 {
 	Conv(v, &output)
 	return output
 }
+
+func Object(v interface{}) interface{} {
+	if v == nil {
+		return nil
+	}
+	data, err := json.Marshal(v)
+	if err != nil {
+		return v
+	}
+	var json_doc interface{}
+	err = json.Unmarshal(data, &json_doc)
+	if err != nil {
+		return v
+	}
+	return json_doc
+}
